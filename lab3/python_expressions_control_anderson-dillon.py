@@ -80,8 +80,8 @@ while fuel > 2:
   print("There's enough fuel")
   fuel -= 2
 
-  #For Loop
-  books = ['The Hobbit', 'The Fellowship of the Ring','The Two Towers', 'The Return of the King']
+#For Loop
+books = ['The Hobbit', 'The Fellowship of the Ring','The Two Towers', 'The Return of the King']
 for book in books:
   print(f'book: {book}')
 
