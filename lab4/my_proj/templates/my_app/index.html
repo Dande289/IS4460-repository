@@ -1,5 +1,15 @@
 <html>
 <body>
     {{ hi }}
+<br>
+   original name was {{orig_name}} the title name is {{ name }}
+
+   <ul>
+        {% for name in names %}
+            <li>{{ name }}</li>
+        {% endfor %}
+   </ul>
+<br>
+   The second name is {{ names.1 }}
 </body>
 </html>
