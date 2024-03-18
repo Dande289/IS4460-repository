@@ -1,5 +1,5 @@
 from django.db import models
-
+#Comment#
 # Create your models here.
 class Customer(models.Model):
     name = models.CharField(max_length=255)
