@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Customer List</title>
+</head>
+<body>
+    <h1>Customer List.</h1>
+    <h2>{{user_message}}</h2>
+<ul>
+{% for customer in customers %}
+<li>{{ customer.name }}</li>
+{% endfor %}
+<form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
+</ul>
+</body>
+</html>

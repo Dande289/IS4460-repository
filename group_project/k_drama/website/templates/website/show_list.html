@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<a href="/website/add/">Movie Add: </a>
+
+    <h2>Korean Drama List:</h2>
+    
+    <br>
+    <u>
+        {% for shows in shows %}
+    
+            <a href="/website/list/{{ show.id }}">
+                <br>
+                {{ show.title }}
+                <br>
+            </a>
+
+    {% endfor %}
+    
+
+
+    </u>
+
+</body>
+
+</html>

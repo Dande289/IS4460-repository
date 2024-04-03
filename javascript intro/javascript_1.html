@@ -1,0 +1,19 @@
+<html>
+
+<body>
+
+<button onclick="showMessage()">Say Hi!</button>
+
+<div id="result"></div>
+
+<script>
+    function showMessage() {
+        const resultDiv = document.getElementById('result');
+        const messageText = document.createElement('p');
+        messageText.innerText = "Hi!";
+        resultDiv.appendChild(messageText);
+    }
+</script>
+
+</body>
+</html>
