@@ -1,8 +1,8 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
-from .models import Show, User
-from .forms import ShowForm, UserForm
+from .models import Show, User, Actor
+from .forms import ShowForm, ActorForm, UserForm
 from rest_framework import generics
 from .serializers import ShowSerializer, UserSerializer
 
@@ -90,6 +90,83 @@ class ShowDelete(View):
         show = Show.objects.get(pk=show_id)
         show.delete()
         return redirect("show-list")
+    
+
+class ActorList(View):
+
+    def get(self,request):
+
+        actors = Actor.objects.all()
+
+        return render(request = request,
+                      template_name = 'website/actor_list.html',
+                      context = {'actors':actors})
+    
+class ActorEdit(View):
+
+    def get(self,request,actor_id):
+
+        actor = Actor.objects.get(pk=actor_id)
+        form = ActorForm(instance=actor)
+
+        return render(request = request,
+                      template_name = 'website/actor_edit.html',
+                      context = {'actor':actor, 'form':form})
+
+    def post(self,request,actor_id):
+
+        actor = Actor.objects.get(pk=actor_id)
+        form = ActorForm(request.POST,instance=actor)
+
+        if form.is_valid():
+            actor = form.save()
+            return redirect('actor-list')
+        
+        return render(request = request,
+                      template_name = 'website/actor_edit.html',
+                      context = {'actor':actor, 'form':form})
+    
+class ActorAdd(View):
+    def get(self, request):
+        form = ActorForm()
+        return render(request = request,
+                      template_name = 'website/actor_add.html',
+                      context = {'form':form})
+    
+    def post(self, request):
+        form = ActorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('actor-list')
+        return render(request = request,
+                      template_name = 'website/actor_add.html',
+                      context={'form': form})
+    
+class ActorDetails(View):
+    def get(self, request, actor_id):
+        actor = Actor.objects.get(pk=actor_id)
+        fields = actor._meta.get_fields()
+        return render(request=request, 
+                      template_name='website/actor_detail.html', 
+                      context={'actor': actor, 'fields':fields})
+
+    
+
+class ActorDelete(View):
+    def get(self,request,actor_id=None):
+
+         actor = Actor.objects.get(pk=actor_id)
+         form = ActorForm(instance=actor)
+
+         return render(request = request,
+                       template_name = 'website/actor_delete.html',
+                       context = {'actor':actor,'form':form})
+
+    def post(self,request,actor_id):
+        actor = Show.objects.get(pk=actor_id)
+        actor.delete()
+        return redirect("actor-list")
+
 
 class ShowListCreateView(generics.ListCreateAPIView):
 

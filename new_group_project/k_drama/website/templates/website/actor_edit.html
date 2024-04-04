@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Actor Edit:</h2>
+    <br>
+   <form method="post" enctype = "multipart/form-data">
+   
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <input type="submit" value="Update">
+   </form>
+</body>
+
+</html>

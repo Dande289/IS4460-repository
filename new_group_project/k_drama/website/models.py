@@ -13,6 +13,13 @@ class Show(models.Model):
 
     def __str__(self):
         return self.title
+    
+class Actor(models.Model):
+    name = models.CharField(max_length=255)
+    birthdate = models.DateField()
+    birth_place = models.CharField(max_length=100)
+    nationality = models.CharField(max_length=100)
+    movies = models.ManyToManyField(Show, related_name='actors')
 
 
 class User(models.Model):
@@ -20,25 +27,3 @@ class User(models.Model):
     password = models.CharField(max_length=255, default="")
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=100)
-
-
-class Review(models.Model):
-    text = models.TextField()
-    rating = models.CharField(max_length=10, blank=True, null=True)
-
-    def __str__(self):
-        return f"Review for {self.show.title} by {self.user.username}"
-
-
-class Genre(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-
-
-class Director(models.Model):
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name

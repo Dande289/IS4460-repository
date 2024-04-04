@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<a href="/website/actor_add/">Click here to add a new actor: </a>
+
+    <h2>Korean Drama Actor List:</h2>
+    
+    <br>
+    <u>
+        {% for actor in actors %}
+    
+            <a href="/website/actor_details/{{ actor.id }}">
+                <br>
+                {{ actor.name }}
+                <br>
+            </a>
+
+    {% endfor %}
