@@ -8,6 +8,9 @@
     {% csrf_token %}
     {{ form.as_p }}
 
+    <label for="actor_image">Actor Image:</label>
+    <input type="file" id="actor_image" name="actor_image" accept="image/*">
+    
     <input type="submit" value="Add">
 
     {{ form.errors }}

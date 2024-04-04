@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.http import HttpResponse
 from django.urls import reverse
 from django.views import View
 from .models import Show, User, Actor
@@ -77,20 +78,21 @@ class ShowDetails(View):
     
 
 class ShowDelete(View):
-    def get(self,request,show_id=None):
-
-         show = Show.objects.get(pk=show_id)
-         form = ShowForm(instance=show)
-
-         return render(request = request,
-                       template_name = 'website/show_delete.html',
-                       context = {'show':show,'form':form})
-
-    def post(self,request,show_id):
+    def get(self, request, show_id=None):
         show = Show.objects.get(pk=show_id)
-        show.delete()
-        return redirect("show-list")
-    
+        return render(
+            request=request,
+            template_name='website/show_delete.html',
+            context={'show': show}
+        )
+
+    def post(self, request, show_id):
+        if 'confirm' in request.POST:
+            show = Show.objects.get(pk=show_id)
+            show.delete()
+            return redirect("show-list")
+        else:
+            return redirect("show-detail", show_id=show_id)
 
 class ActorList(View):
 
@@ -134,7 +136,7 @@ class ActorAdd(View):
                       context = {'form':form})
     
     def post(self, request):
-        form = ActorForm(request.POST)
+        form = ActorForm(request.POST,)
         if form.is_valid():
             form.save()
             return redirect('actor-list')
@@ -153,20 +155,21 @@ class ActorDetails(View):
     
 
 class ActorDelete(View):
-    def get(self,request,actor_id=None):
+    def get(self, request, actor_id=None):
+        actor = Actor.objects.get(pk=actor_id)
+        return render(
+            request=request,
+            template_name='website/actor_delete.html',
+            context={'actor': actor}
+        )
 
-         actor = Actor.objects.get(pk=actor_id)
-         form = ActorForm(instance=actor)
-
-         return render(request = request,
-                       template_name = 'website/actor_delete.html',
-                       context = {'actor':actor,'form':form})
-
-    def post(self,request,actor_id):
-        actor = Show.objects.get(pk=actor_id)
-        actor.delete()
-        return redirect("actor-list")
-
+    def post(self, request, actor_id):
+        if 'confirm' in request.POST:
+            actor = Actor.objects.get(pk=actor_id)
+            actor.delete()
+            return redirect("actor-list")
+        else:
+            return redirect("actor-detail", actor_id=actor_id)
 
 class ShowListCreateView(generics.ListCreateAPIView):
 
