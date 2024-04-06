@@ -1,22 +1,65 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            background-color: #f5f5f5; /* Light background color */
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-top: 20px;
+            color: #444; /* Headings color */
+        }
+
+        u {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: #666; /* Text color for details */
+        }
+
+        strong {
+            color: #333; /* Strong text color */
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff; /* Link color */
+            border: 1px solid #007bff; /* Link border */
+            padding: 5px 10px; /* Link padding */
+            display: inline-block; /* Make the anchor tag behave like a block element */
+            margin-top: 10px; /* Add margin to separate links */
+        }
+
+        a:hover {
+            background-color: #007bff; /* Change background color on hover */
+            color: #fff; /* Change text color on hover */
+        }
+    </style>
+</head>
 <body>
 
-    <h2>Movie Details:</h2>
-    <br>
-    <u>
-        <li><strong>Title:</strong> {{ show.title }}</li>
-        <li><strong>Description:</strong> {{ show.description }}</li>
-        <li><strong>Director:</strong> {{ show.director }}</li>
-        <li><strong>Release Year:</strong> {{ show.release_year }}</li>
-        <li><strong>Rating:</strong> {{ show.rating }}</li>
+<h2>Movie Details:</h2>
 
-        <br>
+<u>
+    <li><strong>Title:</strong> {{ show.title }}</li>
+    <li><strong>Description:</strong> {{ show.description }}</li>
+    <li><strong>Director:</strong> {{ show.director }}</li>
+    <li><strong>Release Year:</strong> {{ show.release_year }}</li>
+    <li><strong>Rating:</strong> {{ show.rating }}</li>
+</u>
 
-    </u>
-    <br>
-    <a href="/website/edit/{{ show.id }}">Update Movie</a>
-    <br><br>
-    <a href="/website/show_delete/{{show.id}}">Delete Movie</a>
+<a href="/website/edit/{{ show.id }}">Update Movie</a>
+<a href="/website/show_delete/{{show.id}}">Delete Movie</a>
+
 </body>
 </html>

@@ -2,8 +2,8 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.urls import reverse
 from django.views import View
-from .models import Show, User, Actor
-from .forms import ShowForm, ActorForm, UserForm
+from .models import Show, User, Actor, Award
+from .forms import ShowForm, ActorForm, UserForm, AwardForm
 from rest_framework import generics
 from .serializers import ShowSerializer, UserSerializer
 
@@ -170,6 +170,76 @@ class ActorDelete(View):
             return redirect("actor-list")
         else:
             return redirect("actor-detail", actor_id=actor_id)
+        
+
+class AwardAdd(View):
+    def get(self, request):
+        form = AwardForm()
+        return render(request = request,
+                      template_name='website/award_add.html',
+                      context = {'form':form})
+        
+    def post(self, request):
+        form = AwardForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('award-list')  # Redirect to the award list page after adding
+        return render(request=request,
+                      template_name='website/award_add.html',
+                      context={'form': form})
+
+        
+class AwardList(View):
+    def get(self, request):
+        awards = Award.objects.all()
+        return render(request=request,
+                      template_name='website/award_list.html',
+                      context = {'awards':awards})
+
+class AwardEdit(View):
+    def get(self, request, award_id):
+        award = Award.objects.get(pk=award_id)
+        form = AwardForm(instance = award)
+        
+        return render(request=request,
+                      template_name='website/award_edit.html',
+                      context = {'award':award, 'form':form})
+        
+    def post(self,request,award_id):
+       award=Award.objects.get(pk=award_id)
+       form=AwardForm(request.POST,instance=award)
+       
+       if form.is_valid():
+           award=form.save()
+           return redirect('award-list')
+       return render(request=request,
+                     template_name='website/award_edit.html',
+                     context={'award':award, 'form':form}) 
+
+class AwardDetails(View):
+    def get(self, request, award_id):
+        award=Award.objects.get(pk=award_id)
+        fields=award._meta.get_fields()
+        return render(request=request,
+                      template_name='website/award_details.html',
+                      context={'award':award,'fields':fields})
+
+class AwardDelete(View):
+    def get(self, request, award_id=None):
+        award=Award.objects.get(pk=award_id)
+        return render(
+            request=request,
+            template_name='website/award_delete.html',
+            context={'award':award}
+        )
+    def post(self,request,award_id):
+        if 'confirm' in request.POST:
+            award=Award.objects.get(pk=award_id)
+            award.delete()
+            return redirect('award-list')
+        else:
+            return redirect('award-detail',award_id=award_id)
+            
 
 class ShowListCreateView(generics.ListCreateAPIView):
 
@@ -189,4 +259,7 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+class AwardListCreateView(generics.ListCreateAPIView):
+    queryset = Award.objects.all()
     

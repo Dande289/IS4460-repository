@@ -26,6 +26,14 @@ urlpatterns = [
     path('show_list/', ShowListCreateView.as_view(),name ='show-list-create'),
 
     path('users/', UserListCreateView.as_view(),name = 'user-list-create'),
-    path('users/<int:pk>/', UserDetailView.as_view(),name = 'user-detail')
+    path('users/<int:pk>/', UserDetailView.as_view(),name = 'user-detail'),
+    
+    #website/ Awards urls
+    path('award_add/', views.AwardAdd.as_view(), name='award-add'),
+    path('award_list/', views.AwardList.as_view(), name='award-list'),
+    path('award_edit/', views.AwardEdit.as_view(), name='award-edit'),
+    path('award_edit/<int:award_id>/', views.AwardEdit.as_view(), name='award-edit'),
+    path('award_details/<int:award_id>/', views.AwardDetails.as_view(), name='award-detail'),
+    path('award_delete/<int:award_id>/', views.AwardDelete.as_view(), name='award-delete'),
 
 ]

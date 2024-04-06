@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<a href="/website/add/">Click here to add a new drama: </a>
+
+    <h2>Korean Drama List:</h2>
+    
+    <br>
+    <u>
+        {% for show in shows %}
+    
+            <a href="/website/details/{{ show.id }}">
+                <br>
+                {{ show.title }}
+                <br>
+            </a>
+
+    {% endfor %}
+    
+
+
+    </u>
+
+</body>
+</html>

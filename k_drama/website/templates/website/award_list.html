@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <h1>Award List</h1>
+    <ul>
+        {% for award in awards %}
+            <li>{{ award.award_name }} - {{ award.description }} ({{ award.award_year }})</li>
+            <!-- Display other attributes here if needed -->
+        {% empty %}
+            <li>No awards found.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'award-add' %}">Add Award</a>
+    <!-- Add other links as needed -->
+</body>
+</html>

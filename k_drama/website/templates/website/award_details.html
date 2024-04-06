@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Award Details</title>
+</head>
+<body>
+    <h1>Award Details</h1>
+    <ul>
+        {% for field in fields %}
+            <li>{{ field.name }}: {{ award.field }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'award-edit' award.id %}">Edit</a>
+    <form method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" name="confirm">Delete</button>
+    </form>
+    <a href="{% url 'award-list' %}">Back to Award List</a>
+</body>
+</html>
