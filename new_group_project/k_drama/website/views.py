@@ -2,10 +2,10 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.urls import reverse
 from django.views import View
-from .models import Show, User, Actor, Award
-from .forms import ShowForm, ActorForm, UserForm, AwardForm
+from .models import Show, Actor, Award, Character
+from .forms import ShowForm, ActorForm, AwardForm, CharacterForm
 from rest_framework import generics
-from .serializers import ShowSerializer, UserSerializer
+from .serializers import ShowSerializer
 
 # Create your views here.
 class Home(View):
@@ -58,7 +58,7 @@ class ShowAdd(View):
                       context = {'form':form})
     
     def post(self, request):
-        form = ShowForm(request.POST)
+        form = ShowForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('show-list')
@@ -136,7 +136,7 @@ class ActorAdd(View):
                       context = {'form':form})
     
     def post(self, request):
-        form = ActorForm(request.POST,)
+        form = ActorForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('actor-list')
@@ -239,6 +239,86 @@ class AwardDelete(View):
             return redirect('award-list')
         else:
             return redirect('award-detail',award_id=award_id)
+        
+
+class CharacterList(View):
+
+    def get(self,request):
+
+        characters = Character.objects.all()
+
+        return render(request = request,
+                      template_name = 'website/character_list.html',
+                      context = {'characters':characters})
+    
+class CharacterEdit(View):
+
+    def get(self,request,character_id):
+
+        character = Character.objects.get(pk=character_id)
+        form = CharacterForm(instance=character)
+
+        return render(request = request,
+                      template_name = 'website/character_edit.html',
+                      context = {'character':character, 'form':form})
+
+    def post(self,request,character_id):
+
+        character = Character.objects.get(pk=character_id)
+        form = CharacterForm(request.POST,instance=character)
+
+        if form.is_valid():
+            character = form.save()
+            return redirect('character-list')
+        
+        return render(request = request,
+                      template_name = 'website/character_edit.html',
+                      context = {'character':character, 'form':form})
+    
+class CharacterAdd(View):
+    def get(self, request):
+        form = CharacterForm()
+        return render(request = request,
+                      template_name = 'website/character_add.html',
+                      context = {'form':form})
+    
+    def post(self, request):
+        form = CharacterForm(request.POST,)
+        if form.is_valid():
+            form.save()
+            return redirect('character-list')
+        return render(request = request,
+                      template_name = 'website/character_add.html',
+                      context={'form': form})
+    
+class CharacterDetails(View):
+    def get(self, request, character_id):
+        character = Character.objects.get(pk=character_id)
+        fields = character._meta.get_fields()
+        return render(request=request, 
+                      template_name='website/character_detail.html', 
+                      context={'character': character,
+                               'show':character.show,
+                               'actor': character.actor,})
+
+    
+
+class CharacterDelete(View):
+    def get(self, request, character_id=None):
+        character = Character.objects.get(pk=character_id)
+        return render(
+            request=request,
+            template_name='website/character_delete.html',
+            context={'character': character}
+        )
+
+    def post(self, request, character_id):
+        if 'confirm' in request.POST:
+            character = Character.objects.get(pk=character_id)
+            character.delete()
+            return redirect("character-list")
+        else:
+            return redirect("character-detail", character_id=character_id)
             
 
 class ShowListCreateView(generics.ListCreateAPIView):
@@ -249,16 +329,6 @@ class ShowListCreateView(generics.ListCreateAPIView):
 class ShowDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Show.objects.all()
     serializer_class = ShowSerializer
-
-class UserListCreateView(generics.ListCreateAPIView):
-
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
-
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
 
 class AwardListCreateView(generics.ListCreateAPIView):
     queryset = Award.objects.all()

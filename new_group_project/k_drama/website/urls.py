@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import ShowListCreateView, ShowDetailView, UserListCreateView, UserDetailView
+from .views import ShowListCreateView, ShowDetailView
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -24,9 +24,6 @@ urlpatterns = [
     #/api/ urls
     path('show_detail/<int:pk>/', ShowDetailView.as_view(),name ='show-detail'),
     path('show_list/', ShowListCreateView.as_view(),name ='show-list-create'),
-
-    path('users/', UserListCreateView.as_view(),name = 'user-list-create'),
-    path('users/<int:pk>/', UserDetailView.as_view(),name = 'user-detail'),
     
     #website/ Awards urls
     path('award_add/', views.AwardAdd.as_view(), name='award-add'),
@@ -36,4 +33,10 @@ urlpatterns = [
     path('award_details/<int:award_id>/', views.AwardDetails.as_view(), name='award-detail'),
     path('award_delete/<int:award_id>/', views.AwardDelete.as_view(), name='award-delete'),
 
+    #website/ Characters urls
+    path('character_list/', views.CharacterList.as_view(),name ='character-list'),
+    path('character_edit/<int:character_id>/', views.CharacterEdit.as_view(), name ='character-edit'),
+    path('character_add/', views.CharacterAdd.as_view(),name ='character-add'),
+    path('character_details/<int:character_id>/', views.CharacterDetails.as_view(),name ='character-details'),
+    path('character_delete/<int:character_id>/', views.CharacterDelete.as_view(),name ='character-delete'),
 ]

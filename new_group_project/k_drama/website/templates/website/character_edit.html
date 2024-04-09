@@ -31,25 +31,17 @@
         input[type="submit"]:hover {
             background-color: #0056b3; /* Button background color on hover */
         }
-
-        .error {
-            color: #dc3545; /* Error message color */
-        }
     </style>
 </head>
 <body>
 
-<h2>Add drama here:</h2>
+<h2>Character Edit:</h2>
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
 
-    <label for="id_image">Image:</label>
-    {{ form.image}}
-    <input type="submit" value="Add">
-
-    {{ form.errors }}
+    <input type="submit" value="Update">
 </form>
 
 </body>

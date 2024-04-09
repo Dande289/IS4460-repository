@@ -10,6 +10,7 @@ class Show(models.Model):
     director = models.CharField(max_length=100, blank=True, null=True)
     release_year = models.PositiveIntegerField()
     rating = models.CharField(max_length=10, blank=True, null=True)
+    image = models.ImageField(upload_to='show_images/', null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -20,20 +21,15 @@ class Actor(models.Model):
     birth_place = models.CharField(max_length=100)
     nationality = models.CharField(max_length=100)
     movies = models.ManyToManyField(Show, related_name='actors')
+    image = models.ImageField(upload_to='actor_images/', null=True, blank=True)
+    
+    def __str__(self):
+        return self.name
 
-
-class User(models.Model):
-    username = models.CharField(max_length=50, default="")
-    password = models.CharField(max_length=255, default="")
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=100)
-
-
-class Admin(models.Model):
-    admin_id = models.CharField(max_length=50, default="")
-    password = models.CharField(max_length=50, default="")
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=100)
+class Character(models.Model):
+    character_name = models.CharField(max_length=255)
+    show = models.ForeignKey(Show, on_delete=models.CASCADE, related_name='actor', null=True, blank=True)
+    actor = models.ForeignKey(Actor, on_delete=models.CASCADE, related_name='actor', null=True, blank=True)
     
 class Award(models.Model):
     award_name = models.CharField(max_length=50, default="")

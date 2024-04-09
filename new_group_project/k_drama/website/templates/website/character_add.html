@@ -20,6 +20,17 @@
             margin-top: 20px;
         }
 
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #444; /* Label text color */
+        }
+
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+
         input[type="submit"] {
             background-color: #007bff; /* Button background color */
             color: #fff; /* Button text color */
@@ -39,14 +50,12 @@
 </head>
 <body>
 
-<h2>Add drama here:</h2>
+<h2>Add character here:</h2>
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
 
-    <label for="id_image">Image:</label>
-    {{ form.image}}
     <input type="submit" value="Add">
 
     {{ form.errors }}

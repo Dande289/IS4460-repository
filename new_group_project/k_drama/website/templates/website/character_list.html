@@ -76,24 +76,18 @@ a:hover {
 }
     </style>
 
-<a href="/website/actor_add/">Click here to add a new actor: </a>
+<a href="/website/character_add/">Click here to add a new character: </a>
 
-<h2>Korean Drama Actor List:</h2>
+    <h2>Korean Drama Character List:</h2>
+    
+    <br>
+    <u>
+        {% for character in characters %}
+    
+            <a href="/website/character_details/{{ character.id }}">
+                <br>
+                {{ character.character_name }}
+                <br>
+            </a>
 
-<br>
-<u>
-    {% for actor in actors %}
-        <a href="/website/actor_details/{{ actor.id }}">
-            <br>
-            {{ actor.name }}
-            <br>
-            {% if actor.image %}
-                <img src="{{ actor.image.url }}" alt="{{ actor.name }} Image">
-            {% endif %}
-            <br>
-        </a>
     {% endfor %}
-</u>
-
-</body>
-</html>

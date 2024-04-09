@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<body>
+<head>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -31,21 +31,20 @@
         }
 
         li {
-            margin-bottom: 10px;
+            margin-bottom: 20px; /* Increased margin for spacing between items */
+            display: flex; /* Use flexbox for layout */
+            flex-direction: column; /* Display elements in a column */
+            align-items: center; /* Center horizontally */
+            text-align: center; /* Center text */
         }
 
-        li a {
-            text-decoration: none;
-            color: #007bff;
-            border: 1px solid #007bff; /* Add border */
-            padding: 5px 10px; /* Add padding to create space around the text */
-            display: inline-block; /* Make the anchor tag behave like a block element */
+        .show-title {
+            margin-bottom: 10px; /* Add some space between title and image */
         }
 
-        li a:hover {
-            text-decoration: none;
-            background-color: #007bff; /* Change background color on hover */
-            color: #fff; /* Change text color on hover */
+        .show-image {
+            max-width: 150px; /* Limit the width of the image */
+            height: auto; /* Maintain aspect ratio */
         }
     </style>
 </head>
@@ -58,7 +57,14 @@
 <ul>
     {% for show in shows %}
     <li>
-        <a href="/website/details/{{ show.id }}">{{ show.title }}</a>
+        <div class="show-title">
+            <a href="/website/details/{{ show.id }}">{{ show.title }}</a>
+        </div>
+        {% if show.image %}
+        <img src="{{ MEDIA_URL }}{{ show.image.url }}" alt="{{ show.title }}" class="show-image">
+        {% else %}
+        <p>No image available</p>
+        {% endif %}
     </li>
     {% endfor %}
 </ul>
