@@ -28,10 +28,12 @@
         ul {
             list-style-type: none;
             padding: 0;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* 5 columns with equal width */
+            grid-gap: 20px; /* Spacing between items */
         }
 
         li {
-            margin-bottom: 20px; /* Increased margin for spacing between items */
             display: flex; /* Use flexbox for layout */
             flex-direction: column; /* Display elements in a column */
             align-items: center; /* Center horizontally */
@@ -49,7 +51,8 @@
     </style>
 </head>
 <body>
-
+<a href="/website/home/">Homepage</a>
+<br>
 <a href="/website/add/">Click here to add a new drama: </a>
 
 <h2>Korean Drama List:</h2>

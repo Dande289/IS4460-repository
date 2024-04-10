@@ -92,8 +92,8 @@ class ShowDelete(View):
             show = Show.objects.get(pk=show_id)
             show.delete()
             return redirect("show-list")
-        else:
-            return redirect("show-detail", show_id=show_id)
+        elif 'cancel' in request.POST:
+            return redirect("show-details", show_id=show_id)
 
 
 #Actor View
@@ -171,8 +171,8 @@ class ActorDelete(View):
             actor = Actor.objects.get(pk=actor_id)
             actor.delete()
             return redirect("actor-list")
-        else:
-            return redirect("actor-detail", actor_id=actor_id)
+        elif 'cancel' in request.POST:
+            return redirect("actor-details", actor_id=actor_id)
         
 
 #Award View
@@ -321,8 +321,8 @@ class CharacterDelete(View):
             character = Character.objects.get(pk=character_id)
             character.delete()
             return redirect("character-list")
-        else:
-            return redirect("character-detail", character_id=character_id)
+        elif 'cancel' in request.POST:
+            return redirect("character-details", character_id=character_id)
             
 
 class ShowListCreateView(generics.ListCreateAPIView):
