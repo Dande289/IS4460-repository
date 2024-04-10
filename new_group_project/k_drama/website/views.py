@@ -8,6 +8,7 @@ from rest_framework import generics
 from .serializers import ShowSerializer
 
 # Create your views here.
+#Home View
 class Home(View):
     def get(self,request):
 
@@ -15,7 +16,7 @@ class Home(View):
                       template_name='website/home.html',
                       context={})
     
-
+#Show View
 class ShowList(View):
 
     def get(self,request):
@@ -94,6 +95,8 @@ class ShowDelete(View):
         else:
             return redirect("show-detail", show_id=show_id)
 
+
+#Actor View
 class ActorList(View):
 
     def get(self,request):
@@ -172,6 +175,7 @@ class ActorDelete(View):
             return redirect("actor-detail", actor_id=actor_id)
         
 
+#Award View
 class AwardAdd(View):
     def get(self, request):
         form = AwardForm()
@@ -241,6 +245,7 @@ class AwardDelete(View):
             return redirect('award-detail',award_id=award_id)
         
 
+#Character View
 class CharacterList(View):
 
     def get(self,request):
@@ -301,7 +306,6 @@ class CharacterDetails(View):
                                'show':character.show,
                                'actor': character.actor,})
 
-    
 
 class CharacterDelete(View):
     def get(self, request, character_id=None):

@@ -26,5 +26,4 @@ class CharacterForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(CharacterForm, self).__init__(*args, **kwargs)
-        # Override the actor field to display a dropdown of actor names
         self.fields['actor'].queryset = Actor.objects.all()
