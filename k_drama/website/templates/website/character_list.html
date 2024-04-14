@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <style>
+        body, h1, h2, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Style the body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Style the headings */
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-top: 30px;
+}
+
+/* Style the navigation links */
+ul {
+    list-style-type: none;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Dropdown menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+    </style>
+<a href="/website/home/">Homepage</a>
+<br>
+<a href="/website/character_add/">Click here to add a new character: </a>
+
+    <h2>Korean Drama Character List:</h2>
+    
+    <br>
+    <u>
+        {% for character in characters %}
+    
+            <a href="/website/character_details/{{ character.id }}">
+                <br>
+                {{ character.character_name }}
+                <br>
+            </a>
+
+    {% endfor %}

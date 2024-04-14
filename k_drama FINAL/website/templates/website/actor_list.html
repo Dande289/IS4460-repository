@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            background-color: #222;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-top: 20px;
+            color: #9c9c9c;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-gap: 20px;
+        }
+
+        li {
+            display: flex; /* Use flexbox for layout */
+            flex-direction: column; /* Display elements in a column */
+            align-items: center; /* Center horizontally */
+            text-align: center; /* Center text */
+        }
+
+        .actor-name {
+            margin-bottom: 10px; /* Add some space between name and image */
+        }
+
+        .actor-image {
+            max-width: 150px; /* Limit the width of the image */
+            height: auto; /* Maintain aspect ratio */
+        }
+    </style>
+</head>
+<body>
+<a href="/website/home/">Homepage</a>
+<br>
+<a href="/website/actor_add">Click here to add a new actor: </a>
+
+<h2>Actor List:</h2>
+
+<ul>
+    {% for actor in actors %}
+    <li>
+        <div class="actor-name">
+            <a href="/website/actor_details/{{ actor.id }}">{{ actor.name }}</a>
+        </div>
+        {% if actor.image %}
+        <img src="{{ MEDIA_URL }}{{ actor.image.url }}" alt="{{ actor.name }}" class="actor-image">
+        {% else %}
+        <p>No image available</p>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>

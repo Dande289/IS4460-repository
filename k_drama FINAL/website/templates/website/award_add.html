@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            background-color: #f5f5f5; /* Light background color */
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #444; /* Heading color */
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #444; /* Label text color */
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc; /* Input border */
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff; /* Button background color */
+            color: #fff; /* Button text color */
+            border: none;
+            padding: 10px 20px; /* Button padding */
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3; /* Button background color on hover */
+        }
+
+        a {
+            color: #007bff; /* Link color */
+            text-decoration: none;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Add Award</h1>
+
+<form method="post"> 
+    {% csrf_token %}
+    <label for="award_name">Award Name:</label> 
+    <input type="text" id="award_name" name="award_name" required> 
+    <br> 
+    <label for="description">Description:</label> 
+    <textarea id="description" name="description" required></textarea> 
+    <br> 
+    <label for="award_year">Award Year:</label> 
+    <input type="number" id="award_year" name="award_year" required> 
+    <br> 
+    <label for="category">Category:</label> 
+    <input type="text" id="category" name="category" required> 
+    <br> 
+    <label for="show">Movie:</label> 
+    <select id="show" name="show"> {% for show in shows %} 
+    <option value="{{ show.id }}">{{ show.title }}</option> 
+    {% endfor %} 
+</select> 
+    <br> 
+    <button type="submit">Add Award</button> 
+</form>
+
+<a href="{% url 'award-list' %}">Back to Award List</a>
+
+</body>
+</html>
