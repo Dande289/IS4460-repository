@@ -3,6 +3,7 @@ from . import views
 from .views import ShowListCreateView, ShowDetailView
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -39,4 +40,11 @@ urlpatterns = [
     path('character_add/', views.CharacterAdd.as_view(),name ='character-add'),
     path('character_details/<int:character_id>/', views.CharacterDetails.as_view(),name ='character-details'),
     path('character_delete/<int:character_id>/', views.CharacterDelete.as_view(),name ='character-delete'),
+
+    #website / Login url
+    path('login/', views.login_view, name='login'),
+
+    #website / Logout
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
 ]

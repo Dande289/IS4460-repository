@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Award List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            background-color: #f5f5f5; /* Light background color */
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #444; /* Heading color */
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: #666; /* List item text color */
+        }
+
+        a {
+            color: #007bff; /* Link color */
+            text-decoration: none;
+            margin-top: 10px;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<a href="/website/home/">Homepage</a>
+<br>
+<h1>Award List</h1>
+
+<ul>
+    {% for award in awards %}
+        <li>{{ award.award_name }} - {{ award.description }} ({{ award.award_year }})</li>
+        <!-- Display other attributes here if needed -->
+    {% empty %}
+        <li>No awards found.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'award-add' %}">Add Award</a>
+<!-- Add other links as needed -->
+
+</body>
+</html>

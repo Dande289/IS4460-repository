@@ -6,8 +6,26 @@ from .models import Show, Actor, Award, Character
 from .forms import ShowForm, ActorForm, AwardForm, CharacterForm
 from rest_framework import generics
 from .serializers import ShowSerializer
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
 
 # Create your views here.
+#Login View
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'website/login.html', {'form': form})
+
+
 #Home View
 class Home(View):
     def get(self,request):
@@ -28,28 +46,27 @@ class ShowList(View):
                       context = {'shows':shows})
     
 class ShowEdit(View):
-
-    def get(self,request,show_id):
-
+    def get(self, request, show_id):
         show = Show.objects.get(pk=show_id)
         form = ShowForm(instance=show)
+        awards = Award.objects.all()  # Fetch all available awards
+        return render(request=request,
+                      template_name='website/show_edit.html',
+                      context={'show': show, 'form': form, 'awards': awards})
 
-        return render(request = request,
-                      template_name = 'website/show_edit.html',
-                      context = {'show':show,'form':form})
-    
-    def post(self,request,show_id):
-
+    def post(self, request, show_id):
         show = Show.objects.get(pk=show_id)
-        form = ShowForm(request.POST,instance=show)
-
+        form = ShowForm(request.POST, instance=show)
         if form.is_valid():
             show = form.save()
+            award_id = request.POST.get('award')
+            if award_id:
+                award = Award.objects.get(pk=award_id)
+                show.awards.add(award)
             return redirect('show-list')
-
-        return render(request = request,
-                      template_name = 'website/show_edit.html',
-                      context = {'show':show,'form':form})
+        return render(request=request,
+                      template_name='website/show_edit.html',
+                      context={'show': show, 'form': form, 'awards': Award.objects.all()})
     
 class ShowAdd(View):
     def get(self, request):
@@ -179,9 +196,10 @@ class ActorDelete(View):
 class AwardAdd(View):
     def get(self, request):
         form = AwardForm()
+        shows = Show.objects.all()
         return render(request = request,
                       template_name='website/award_add.html',
-                      context = {'form':form})
+                      context = {'form':form, 'shows':shows})
         
     def post(self, request):
         form = AwardForm(request.POST)

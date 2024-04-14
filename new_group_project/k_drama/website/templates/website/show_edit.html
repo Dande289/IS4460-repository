@@ -40,7 +40,13 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-
+    <label for="award">Select Award:</label>
+    <select name="award" id="award">
+        <option value="" selected>None</option>
+        {% for award in awards %}
+        <option value="{{ award.id }}">{{ award.award_name }}</option>
+        {% endfor %}
+    </select>
     <input type="submit" value="Update">
 </form>
 

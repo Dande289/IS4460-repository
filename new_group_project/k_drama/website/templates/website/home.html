@@ -119,6 +119,10 @@ a:hover {
 <body>
 
 <header>
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
     <h1>Welcome to Korean Drama Website</h1>
 </header>
 

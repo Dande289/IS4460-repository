@@ -49,6 +49,14 @@
     {{ form.image}}
     <input type="submit" value="Add">
 
+    <label for="id_award">Select Award:</label>
+    <select name="award" id="id_award">
+        {% for award in awards %}
+            <option value="{{ award.id }}">{{ award.award_name }}</option>
+        {% endfor %}
+    </select>
+    
+    <input type="submit" value="Add">
     {{ form.errors }}
 </form>
 
